@@ -9,7 +9,7 @@ from tensorflow.keras.models import load_model
 # Load the trained model
 prices_test = [100, 110, 105, 115, 120, 10, 590, 216, 210, 215]  # Replace this with your future price values
 probabilities_test = [0.4, 0.3, 0.25, 0.15, 0.1, 0.1, 0.01, 0.01, 0.4]
-model = load_model("Qlearning_trading_model.h5")
+model = load_model("trading_model.h5")
 
 # Create a test environment
 test_env = TradingEnvironment(prices_test, probabilities_test)  # Replace with your test data

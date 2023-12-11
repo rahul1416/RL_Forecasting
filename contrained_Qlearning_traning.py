@@ -68,4 +68,4 @@ for episode in range(episodes):
     env.reset()
 
 # Save the trained model for later use
-model.save("Qlearning_trading_model.h5")
+model.save("trading_model.h5")

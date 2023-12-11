@@ -1,4 +1,5 @@
 import numpy as np
+import tensorflow as tf
 
 class TradingEnvironment:
     def __init__(self, prices, probabilities):
@@ -15,7 +16,7 @@ class TradingEnvironment:
         self.shares_held = 0
         
     def get_state(self):
-        return (self.prices[self.current_step], self.balance, self.shares_held)
+        return ([self.prices[self.current_step], self.balance, self.shares_held])
     
     def take_action(self, action):
         current_price = self.prices[self.current_step]
@@ -43,14 +44,15 @@ class TradingEnvironment:
         current_price = self.prices[self.current_step - 1]  # Get the current price
 
         # Print price and stock values at each step
-        print(f"Step: {self.current_step}, Price: {current_price}, Balance: {self.balance}, Shares Held: {self.shares_held}, action:{action}")
+        # print(f"Step: {self.current_step}, Price: {current_price}, Balance: {self.balance}, Shares Held: {self.shares_held}, action:{action}")
 
 
         reward = 0
         if self.current_step == self.max_steps:
             final_balance = self.balance + self.shares_held * self.prices[-1]
+
             if (self.balance == 0 and action == 1 ) and (self.shares_held == 0 and action == -1):
-                reward = -e^(-10)
+                reward = -e^(10)
             else:
                 reward = final_balance -  1000  # Initial balance
             done = True
@@ -59,34 +61,36 @@ class TradingEnvironment:
         return next_state, reward, done
 
 
-# Example usage
-prices = [100, 110, 105, 115, 120, 110, 512, 216, 210, 215]  # Replace this with your future price values
-probabilities = [0.4, 0.3, 0.25, 0.15, 0.1, 0.1, 0.01, 0.01, 0.4]  # Replace with corresponding probabilities
+# # Example usage
+# prices = [100, 110, 105, 115, 120, 110, 512, 216, 210, 215]  # Replace this with your future price values
+# probabilities = [0.4, 0.3, 0.25, 0.15, 0.1, 0.1, 0.01, 0.01, 0.4]  # Replace with corresponding probabilities
 
-env = TradingEnvironment(prices, probabilities)
+# env = TradingEnvironment(prices, probabilities)
+# # Inside your training loop
+# state = tf.convert_to_tensor(env.get_state(), dtype=tf.float32)
 
-# Example episode
-env.reset()
-action = 0
-for _ in range(len(prices)):
-    if action == 0:
-        action = np.random.choice([-1, 0, 1], p=[0.3, 0.4, 0.3])  # Replace with your RL agent's action
-    elif action == 1:
-        action = np.random.choice([-1, 0])
-    elif action == -1:
-        action = np.random.choice([1, 0])
+# # Example episode
+# env.reset()
+# action = 0
+# for _ in range(len(prices)):
+#     if action == 0:
+#         action = np.random.choice([-1, 0, 1], p=[0.3, 0.4, 0.3])  # Replace with your RL agent's action
+#     elif action == 1:
+#         action = np.random.choice([-1, 0])
+#     elif action == -1:
+#         action = np.random.choice([1, 0])
 
-    next_state, reward, done = env.step(action)
-    if done:
-        break
+#     next_state, reward, done = env.step(action)
+#     if done:
+#         break
 
-# Retrieve final state, reward, balance, shares held
-final_state = env.get_state()
-final_balance = env.balance
-final_shares_held = env.shares_held
-print("Final State:", final_state)
-# print("Final Balance:", final_balance)
-print("Final Shares Held:", final_shares_held)
-print("action:", action)
-print("reward",reward)
+# # Retrieve final state, reward, balance, shares held
+# final_state = env.get_state()
+# final_balance = env.balance
+# final_shares_held = env.shares_held
+# print("Final State:", final_state)
+# # print("Final Balance:", final_balance)
+# print("Final Shares Held:", final_shares_held)
+# print("action:", action)
+# print("reward",reward)
 

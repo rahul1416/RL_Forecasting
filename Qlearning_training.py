@@ -22,7 +22,7 @@ model = Sequential([
 model.compile(optimizer=Adam(learning_rate=0.001), loss='mse')
 
 # Training parameters
-episodes = 10
+episodes = 1000
 epsilon = 0.1  # Exploration-exploitation trade-off
 gamma = 0.95  # Discount factor
 
@@ -47,7 +47,7 @@ for episode in range(episodes):
         q_values[0][action] = target
 
         # Train the model on the updated Q-values
-        model.fit(state, q_values, epochs=100, verbose=0)
+        model.fit(state, q_values, epochs=1000, verbose=0)
 
         # Move to the next time step
         state = next_state
