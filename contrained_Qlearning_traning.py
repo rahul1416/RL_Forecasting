@@ -34,9 +34,21 @@ for episode in range(episodes):
     for step in range(len(env.prices) - 1):
         # Epsilon-greedy exploration
         if np.random.rand() <= epsilon:
+            if action == 0:
+                action = np.random.choice([-1, 0, 1], p=[0.3, 0.4, 0.3])  # Replace with your RL agent's action
+            elif action == 1:
+                action = np.random.choice([-1, 0])
+            elif action == -1:
+                action = np.random.choice([1, 0])
+        else:
             q_values = model.predict(state)
-            action = np.random.choice([-1, 0, 1], p=[0.3, 0.4, 0.3])  # Replace with your RL agent's action
-            
+            if action == 0:
+                action = np.random.choice([-1, 0, 1], p=[0.3, 0.4, 0.3])  # Replace with your RL agent's action
+            elif action == 1:
+                action = np.random.choice([-1, 0])
+            elif action == -1:
+                action = np.random.choice([1, 0])
+
         # Take the chosen action and observe the new state and reward
         next_state, reward, done = env.step(action)
         next_state = np.reshape(next_state, [1, input_size])

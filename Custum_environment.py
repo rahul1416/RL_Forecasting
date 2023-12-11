@@ -49,7 +49,10 @@ class TradingEnvironment:
         reward = 0
         if self.current_step == self.max_steps:
             final_balance = self.balance + self.shares_held * self.prices[-1]
-            reward = final_balance -  1000  # Initial balance
+            if (self.balance == 0 and action == 1 ) and (self.shares_held == 0 and action == -1):
+                reward = -e^(-10)
+            else:
+                reward = final_balance -  1000  # Initial balance
             done = True
             print("Final_balance:",final_balance)
         
@@ -78,12 +81,12 @@ for _ in range(len(prices)):
         break
 
 # Retrieve final state, reward, balance, shares held
-# final_state = env.get_state()
-# final_balance = env.balance
-# final_shares_held = env.shares_held
-# print("Final State:", final_state)
-# # print("Final Balance:", final_balance)
-# print("Final Shares Held:", final_shares_held)
-# print("action:", action)
-# print("reward",reward)
+final_state = env.get_state()
+final_balance = env.balance
+final_shares_held = env.shares_held
+print("Final State:", final_state)
+# print("Final Balance:", final_balance)
+print("Final Shares Held:", final_shares_held)
+print("action:", action)
+print("reward",reward)
 
