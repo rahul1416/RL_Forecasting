@@ -2,17 +2,17 @@ import numpy as np
 import tensorflow as tf
 
 class TradingEnvironment:
-    def __init__(self, prices, probabilities):
+    def __init__(self, prices):
         self.prices = prices
-        self.probabilities = probabilities
+        # self.probabilities = probabilities
         self.current_step = 0
-        self.balance = 1000  # Initial balance
+        self.balance = 10^7  # Initial balance
         self.shares_held = 0
         self.max_steps = len(prices)-1
         
     def reset(self):
         self.current_step = 0
-        self.balance = 1000
+        self.balance = 10^7
         self.shares_held = 0
         
     def get_state(self):
@@ -54,7 +54,7 @@ class TradingEnvironment:
             if (self.balance == 0 and action == 1 ) and (self.shares_held == 0 and action == -1):
                 reward = -e^(10)
             else:
-                reward = final_balance -  1000  # Initial balance
+                reward = final_balance -  10000000  # Initial balance
             done = True
             print("Final_balance:",final_balance)
         
